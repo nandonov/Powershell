@@ -22,15 +22,15 @@ param
    $OldFileDays = 7
 )
 
-$Date = (Get-Date -f "yyyy-MM-dd")
+$DateStr = (Get-Date).ToString("yyyy:MM:dd")
 
 foreach ($Server in $Servers)
 {
    # Create Directory
-   New-Item -Path "$BasePath\$Server\$Date" -ItemType Directory -ErrorAction SilentlyContinue | Out-Null 
+   New-Item -Path "$BasePath\$Server\$DateStr" -ItemType Directory -ErrorAction SilentlyContinue | Out-Null 
 
    # Run Export
-   . "C:\Program Files (x86)\Robware\RVTools\RVTools.exe" -passthroughAuth -s $Server -c ExportAll2csv -d "$BasePath\$Server\$Date"
+   . "C:\Program Files (x86)\Robware\RVTools\RVTools.exe" -passthroughAuth -s $Server -c ExportAll2csv -d "$BasePath\$Server\$DateStr"
 
    # Cleanup old files
    $Items = Get-ChildItem -Directory "$BasePath\$server"
